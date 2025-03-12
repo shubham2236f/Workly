@@ -2,12 +2,11 @@
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom";
 import JobCard from "@/component/searchresult/JobCard"
-import JobFilters from "@/component/searchresult/JobFilters"
 import { getJobs } from "@/api/apijobs";
 import useFetch from "@/hooks/useFetch";
 import { useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
-import Load from "@/component/loader/load";
+import Load from "@/component/loader/Load";
 
 export default function JobSearchResults({outerquery}) {
   const [searchParams] = useSearchParams();
