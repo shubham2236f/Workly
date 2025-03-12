@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import Landing from './pages/landing'
+import Landing from './pages/Landing'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 import About from './component/About/About'
 import JobSearchResults from './pages/JobSearchResults'
