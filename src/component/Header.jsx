@@ -80,6 +80,7 @@ const  Header= () => {
       });
     }
   return (
+    <>
     <div>
     <nav className="bg-white shadow-lg">
       <div className="w-[99%]">
@@ -263,6 +264,8 @@ const  Header= () => {
 
 
     </div>
+    </>
+    
   )
 }
 

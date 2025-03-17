@@ -2,9 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { Facebook, Twitter, LinkedinIcon as LinkedIn, Instagram, Mail, Phone, MapPin } from "lucide-react"
 import { Link } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
 
 const Footer = () => {
-  
+  const {user} = useUser();
   return (
    <>
     <footer className="bg-gray-800 text-white py-8 relative bottom-0 mt-3">
@@ -15,24 +16,36 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/jobs" className="hover:text-gray-300">
+              {user?.unsafeMetadata?.role !== "recruiter" ? (
+                  <Link to="/search" className="hover:text-gray-300">
                   Find Jobs
-                </Link>
+                </Link>):(<Link to="/about" className="hover:text-gray-300">
+                  About
+                </Link>)}
               </li>
               <li>
-                <Link href="/post-job" className="hover:text-gray-300">
+              {user?.unsafeMetadata?.role !== "recruiter" ? (
+                  <Link to="/interview" className="hover:text-gray-300">
+                  Get Prep.
+                </Link>
+                ):(<Link to="/PostJob" className="hover:text-gray-300">
                   Post a Job
-                </Link>
+                </Link>)}
               </li>
               <li>
-                <Link href="/resume" className="hover:text-gray-300">
+              {user?.unsafeMetadata?.role !== "recruiter" ? (
+                  <Link to="/resume" className="hover:text-gray-300">
                   Upload Resume
                 </Link>
+                ):(<Link to="/my-jobs" className="hover:text-gray-300">
+                  My Jobs
+                </Link>)}
               </li>
               <li>
-                <Link href="/career-advice" className="hover:text-gray-300">
+              {user?.unsafeMetadata?.role !== "recruiter" && (
+                  <Link to="/dashboard" className="hover:text-gray-300">
                   Career Advice
-                </Link>
+                </Link>)}
               </li>
             </ul>
           </div>
@@ -118,3 +131,6 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
+
