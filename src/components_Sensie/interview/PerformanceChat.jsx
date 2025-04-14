@@ -66,7 +66,20 @@ export default function PerformanceChart({ assessments }) {
                 dataKey="score"
                 stroke="hsl(var(--primary))"
                 strokeWidth={2}
-              />
+                dot={({ cx, cy,payload})=>(
+                  <circle 
+                  cx={cx}
+                  cy={cy}
+                  r={6}
+                  fill={
+                    payload.score >= 80 ? "green" :
+                    payload.score >= 50 ? "yellow" :
+                    "red"
+                  }
+                  />
+                    )
+                }
+                />
             </LineChart>
           </ResponsiveContainer>
         </div>

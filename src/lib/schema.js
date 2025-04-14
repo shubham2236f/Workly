@@ -39,7 +39,6 @@ export const entrySchema = z.object({
     organization: z.string().min(1, "Organization is required"),
     startDate: z.string().min(1, "Start date is required"),
     endDate: z.string().optional(),
-    description: z.string().min(1, "Description is required"),
     current: z.boolean().default(false),
   })
   .refine(
@@ -74,13 +73,13 @@ export function entriesToMarkdown(entries, type) {
   if (!entries?.length) return "";
 
   return (
-    `## ${type}\n\n` +
+    `### ${type}\n\n` +
     entries
       .map((entry) => {
         const dateRange = entry.current
           ? `${entry.startDate} - Present`
           : `${entry.startDate} - ${entry.endDate}`;
-        return `### ${entry.title} @ ${entry.organization}\n${dateRange}\n\n${entry.description}`;
+        return `  **● ${entry.title} @ ${entry.organization}**\n${dateRange}`;
       })
       .join("\n\n")
   );

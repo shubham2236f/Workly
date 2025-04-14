@@ -2,12 +2,22 @@ import { Trophy, CheckCircle2, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { useEffect,useState } from "react";
 
 export default function QuizResult({
   result,
   hideStartNew = false,
   onStartNew,
 }) {
+ const [color, setColor] = useState("text-black"); // Default color
+  useEffect(()=>{
+    const scoreColor =
+    result?.quizScore>= 80 ? "bg-green-500" :
+    result?.quizScore>= 50 ? "bg-yellow-400" :
+      "bg-red-500";
+    setColor(scoreColor)
+  },[result])
+
   if (!result) return null;
 
   return (
@@ -21,7 +31,7 @@ export default function QuizResult({
         {/* Score Overview */}
         <div className="text-center space-y-2">
           <h3 className="text-2xl font-bold">{result.quizScore.toFixed(1)}%</h3>
-          <Progress value={result.quizScore} className="w-full" />
+          <Progress value={result.quizScore} className={`w-full ${color}`} />
         </div>
 
         {/* Improvement Tip */}

@@ -6,6 +6,8 @@ import {
     Loader2,
     Monitor,
     Save,
+    Loader,
+    Sparkles
   } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -20,18 +22,19 @@ import MDEditor from '@uiw/react-md-editor';
 import { saveResume } from '@/api/apiResume';
 import {entriesToMarkdown} from '@/lib/schema'
 import { EntryForm } from './EntryForm';
+import { improveWithAI } from '@/api/apiResume';
 import  html2pdf  from 'html2pdf.js/dist/html2pdf.min.js';
  
 const ResumeBuilder = ({ initialContent }) => {
-
     const [activeTab, setActiveTab] = useState("edit");
     const [previewContent, setPreviewContent] = useState(initialContent);
-    const { user } = useUser();
+    const { user,isloading } = useUser();
     const [resumeMode, setResumeMode] = useState("preview");
 
     const {
       control,
       register,
+      setValue,
       handleSubmit,
       watch,
       formState: { errors },
@@ -53,6 +56,15 @@ const ResumeBuilder = ({ initialContent }) => {
       data: saveResult,
       error: saveError,
     } = useFetch(saveResume);
+
+    const {
+      loading: isImproving,
+      fn: improveFn,
+      data: newSummary,
+      error: improveError,
+    } = useFetch(improveWithAI,{
+      user_id: user?.id,
+    });
 
      // Watch form fields for preview updates
   const formValues = watch();
@@ -83,8 +95,8 @@ const ResumeBuilder = ({ initialContent }) => {
     const { summary, skills, experience, education, projects } = formValues;
     return [
       getContactMarkdown(),
-      summary && `## Professional Summary\n\n${summary}`,
-      skills && `## Skills\n\n${skills}`,
+      summary && `### Professional Summary\n\n${summary}\n\n`,
+      skills && `### Skills\n\n${skills}\n\n`,
       entriesToMarkdown(experience, "Work Experience"),
       entriesToMarkdown(education, "Education"),
       entriesToMarkdown(projects, "Projects"),
@@ -121,7 +133,7 @@ const ResumeBuilder = ({ initialContent }) => {
         .replace(/\n/g, "\n") // Normalize newlines
         .replace(/\n\s*\n/g, "\n\n") // Normalize multiple newlines to double newlines
         .trim();
-
+      console.log(formattedContent)
       console.log( previewContent);
       await saveResumeFn(previewContent);
     } catch (error) {
@@ -144,6 +156,24 @@ const ResumeBuilder = ({ initialContent }) => {
         \n\n<div align="center">\n\n${parts.join(" | ")}\n\n</div>`
       : "";
   };
+
+  const handleImproveDescription = async () =>{
+    try {
+      await improveFn({
+        summary: formValues.summary,
+        skills: formValues.skills,
+        experience: formValues.experience,
+      });
+    } catch (error) {
+      console.error("improve error:", error); 
+    }
+  };
+  useEffect(()=>{
+    if (!isImproving) {
+      console.log(newSummary)
+      setValue("summary",newSummary)
+    }
+  },[newSummary])
 
 
   return (
@@ -272,6 +302,24 @@ const ResumeBuilder = ({ initialContent }) => {
                   />
                 )}
               />
+              <Button
+                  type="button"
+                  size="sm"
+                  onClick={handleImproveDescription}
+                >
+                 
+                 {isImproving ? (
+                <>
+                  <Loader className="h-4 w-4 mr-2 animate-spin" />
+                  Improving...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  Improve with AI
+                </>
+              )}
+                </Button>
               {errors.summary && (
                 <p className="text-sm text-red-500">{errors.summary.message}</p>
               )}

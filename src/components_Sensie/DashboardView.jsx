@@ -64,8 +64,10 @@ const DashboardView = ({insights}) => {
   const outlookColor = getMarketOutlookInfo(outlookValue).color;
   return (
 <div>
-      <div className="flex items-center justify-center mb-5">
-        <h1 className="text-6xl font-bold bg-gradient-to-t  from-slate-950 to-slate-300 text-transparent bg-clip-text">
+      <div className="flex items-center justify-center mx-2">
+        <h1 
+        className="w-full text-4xl md:text-5xl font-extrabold text-center mb-8 bg-gradient-to-r from-black to-teal-400 
+      text-transparent bg-clip-text border-b-2 p-2 border-black">
           Industry Insights
           </h1>
       </div>
@@ -95,10 +97,12 @@ const DashboardView = ({insights}) => {
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="text-2xl font-bold mb-2">
               {insights?.IndustryInsight?.growthRate}%
             </div>
-            <Progress value={insights?.IndustryInsight?.growthRate} className="mt-2" />
+            <div className="border border-gray-400 rounded-xl">
+            <Progress value={insights?.IndustryInsight?.growthRate}/>
+            </div>
           </CardContent>
         </Card>
 

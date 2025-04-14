@@ -1,5 +1,5 @@
 import { useSession } from "@clerk/clerk-react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 const useFetch = (cb,option = {}) => {
     const [data,setData] = useState("");
@@ -7,6 +7,12 @@ const useFetch = (cb,option = {}) => {
     const [loading,setLoading] = useState("");
 
     const {session,isLoaded} = useSession();
+
+    useEffect(() => {
+        if (data) {
+          console.log("New data (via useEffect):", data);
+        }
+      }, [data]);
 
     const fn = async(...args)=>{
         setLoading(true)
@@ -30,7 +36,6 @@ const useFetch = (cb,option = {}) => {
         }
         finally{
             setLoading(false)
-            console.log(data)
         }
     }
     return {fn,data,loading,error,setData};

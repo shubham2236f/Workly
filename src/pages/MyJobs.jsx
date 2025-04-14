@@ -11,10 +11,10 @@ const MyJobs = () => {
   }
 
   return (
-    <div>
+    <div className="mx-2">
       <h1 
-      className="border-b-2 border-stone-950 font-extrabold text-5xl sm:text-7xl text-center pb-8 m-2
-      bg-gradient-to-r from-black to-teal-400 text-transparent bg-clip-text">
+      className="text-4xl md:text-5xl font-extrabold text-center mb-8 bg-gradient-to-r from-black to-teal-400 
+      text-transparent bg-clip-text border-b-2 p-2 border-black">
         {user?.unsafeMetadata?.role === "recruiter"
           ? "My Jobs"
           : "My Applications"}

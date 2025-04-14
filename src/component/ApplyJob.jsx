@@ -75,16 +75,18 @@ const ApplyJob = ({ user, job, fetchJob, applied = false }) => {
     <div>
 
 <Drawer open={applied ? false : undefined}>
-      <DrawerTrigger asChild className='w-full bg-black'>
+    <div className='w-full flex  justify-center'>
+    <DrawerTrigger asChild className='w-full bg-black'>
         <Button
           size="custom"
-          className="bg-gray-950 text-white"
+          className="bg-gray-950 text-white w-[30vmin]"
           variant={job?.isOpen && !applied ? "blue" : "destructive"}
           disabled={!job?.isOpen || applied}
         >
           {job?.isOpen ? (applied ? "Applied" : "Apply") : "Hiring Closed"}
         </Button>
       </DrawerTrigger>
+    </div>
       <DrawerContent> 
         <DrawerHeader>
           <DrawerTitle>

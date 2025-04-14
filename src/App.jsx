@@ -16,6 +16,7 @@ import Dashboard from './SensiePages/Dashboard'
 import MockInterview from './SensiePages/MockInterview'
 import Interview from './SensiePages/Interview'
 import ResumePage from './SensiePages/ResumePage'
+import FAQ from './SensiePages/FAQ'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -75,6 +76,13 @@ function App() {
           element:(
             <ProtectedRoute>
             <Dashboard/>
+            </ProtectedRoute>),
+        },
+        {
+          path:"/FAQ",
+          element:(
+            <ProtectedRoute>
+            <FAQ/>
             </ProtectedRoute>),
         },
       ]

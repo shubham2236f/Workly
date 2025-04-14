@@ -1,4 +1,3 @@
-
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom";
 import JobCard from "@/component/searchresult/JobCard"
@@ -14,7 +13,6 @@ export default function JobSearchResults({outerquery}) {
   const [searchQuery, setSearchQuery] = useState(categoryQuery || "")
   const [location, setLocation] = useState("")
   const [company_id, setcompany_id] = useState("")
-  const [filters, setFilters] = useState({ jobTypes: [], locations: [] })
   const {isLoaded} = useUser()
 
   const {
@@ -45,18 +43,6 @@ export default function JobSearchResults({outerquery}) {
     console.log(jobs)
   },[jobs])
 
-  // const filteredJobs = jobs.filter((job) => {
-  //   const matchesSearch =
-  //     job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     job.location.toLowerCase().includes(searchQuery.toLowerCase())
-
-  //   const matchesJobType = filters.jobTypes.length === 0 || filters.jobTypes.includes(job.type)
-  //   const matchesLocation = filters.locations.length === 0 || filters.locations.includes(job.location)
-
-  //   return matchesSearch && matchesJobType && matchesLocation
-  // })
-
   const handleSubmit = (e)=>{
     e.preventDefault()
     console.log("searching....")
@@ -64,10 +50,6 @@ export default function JobSearchResults({outerquery}) {
     const query = formData.get("search-query")
     if(query) setSearchQuery(query)
   }
-
-  // const handleFilterChange = (newFilters) => {
-  //   setFilters(newFilters)
-  // }
 
   if(!isLoaded){
     return <Load/>
@@ -78,11 +60,6 @@ export default function JobSearchResults({outerquery}) {
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold mb-8 text-black">Job Search Results</h1>
-        {/* <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
-          
-          <JobFilters onFilterChange={handleFilterChange} />
-        </div> */}
-
         <form onSubmit={handleSubmit} className="flex gap-3">
           <input type="text"
           name="search-query"

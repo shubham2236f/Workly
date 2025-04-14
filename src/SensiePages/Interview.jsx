@@ -32,8 +32,9 @@ const Interview = () => {
     if(assessments){
         return (
             <div className='bg-gray-100'>
-              <div className="flex items-center justify-between mb-5">
-                <h1 className="text-6xl font-bold gradient-title">
+              <div className="flex items-center justify-center mx-2">
+                <h1 className=" w-full text-4xl md:text-5xl font-extrabold text-center mb-8 bg-gradient-to-r from-black to-teal-400 
+                text-transparent bg-clip-text border-b-2 p-2 border-black">
                   Interview Preparation
                 </h1>
               </div>

@@ -82,11 +82,12 @@ export async function getResume(token,user_id) {
 }
 
 //improve resume with AI
-export async function improveWithAI(token,{user_id},current,type) {
-  console.log(user_id)
-  console.log(current,type)
-    const supabase = await supabaseClient(token);
+export async function improveWithAI(token,{user_id},info) {
+  console.log("java,javascript")
+    console.log(user_id,info);
   
+    const supabase = await supabaseClient(token);
+    console.log("finding..")
     const { data: user, error: userError } = await supabase
         .from("user")
         .select("industry")
@@ -97,36 +98,29 @@ export async function improveWithAI(token,{user_id},current,type) {
           return null;
         }
     if (!user) throw new Error("User not found");
+    console.log(user)
+    console.log("starting...")
     const prompt = `
-  You are a professional resume writer with expertise in ${user?.industry}. 
-  Your task is to enhance the following ${type} description to make it stand out.
+    improve my summary using:
+    old summary: ${info?.summary},
+    Industry: ${user.industry}  ,
+    Skills: ${info?.skills}  ,
 
-  **Current Content:** "${current}"
-
-  **Objectives:**
-  - Rewrite it to be more engaging, results-driven, and industry-aligned.
-  - Use action-oriented language and eliminate passive voice.
-  - Incorporate quantifiable achievements, specific examples, and industry-relevant terminology.
-  - Maintain clarity and conciseness while maximizing impact.
-  - Ensure a natural, human-like flow without making it sound robotic.
-  - Introduce variation in sentence structure and avoid clichés.
-
-  **Additional Considerations:**
-  - Where applicable, add numbers, percentages, or specific outcomes to showcase effectiveness.
-  - Highlight problem-solving abilities, leadership, or innovation.
-  - Use persuasive yet professional wording to capture attention.
-  
-  **Output Format:**
-  - Deliver a single refined paragraph.
-  - Do **not** include extra commentary or formatting.
-  - Make each revision feel unique and tailored rather than generic.
-`;
-
-  
+     **Output Requirements:**  
+  - Provide a **single improved paragraph** with a polished, professional tone.  
+  - Do **not** include additional commentary or formatting, only the enhanced summary.  
+  `;
+  console.log("still...")
     try {
+      console.log(prompt,model)
       const result = await model.generateContent(prompt);
+      if (!result || !result.response || !result.response.candidates) {
+        console.error("AI response is empty or invalid");
+        return null;
+      }
       const response = result.response;
       const improvedContent = response.text().trim();
+      console.log("ending...",improvedContent)
       return improvedContent;
     } catch (error) {
       console.error("Error improving content:", error);

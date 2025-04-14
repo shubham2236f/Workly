@@ -7,22 +7,8 @@ import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'react-router-dom';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  PenBox,
-  LayoutDashboard,
-  FileText,
-  GraduationCap,
-  ChevronDown,
-  StarsIcon,
-  RefreshCcw
-} from "lucide-react";
-
+import {DropdownMenu,DropdownMenuContent,DropdownMenuItem,DropdownMenuTrigger,} from "@/components/ui/dropdown-menu";
+import {PenBox,FileText,GraduationCap,ChevronDown,StarsIcon,} from "lucide-react";
 gsap.registerPlugin(useGSAP);
 
 const navItems = [
@@ -44,7 +30,6 @@ const  Header= () => {
         duration:2,
       })
     })
-    console.log(user?.publicMetadata)
     useEffect(() => {
       const handleResize = () => {
         if (window.innerWidth > 768 && isOpen) {
@@ -82,7 +67,7 @@ const  Header= () => {
   return (
     <>
     <div>
-    <nav className="bg-white shadow-lg">
+    <nav className="bg-transparent  shadow-lg ">
       <div className="w-[99%]">
         <div className="flex justify-between">
          
@@ -94,10 +79,6 @@ const  Header= () => {
           
           <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
-              // <motion.div
-              // initial={{ opacity: 0, y: 20 }}
-              // animate={{ opacity: 1, y: 0 }}
-              // transition={{ duration: 1 }}>
               <Link
                 key={item.name}
                 to={item.href}
@@ -171,14 +152,6 @@ const  Header= () => {
                       <GraduationCap className="h-4 w-4" />
                       Interview Prep
                     </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <button
-                    className="bg-transparent w-full text-black hover:focus:no-underline" 
-                    onClick={handleClick}>
-                    <RefreshCcw className="h-4 w-"/>
-                    Update Insight
-                    </button>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { Laptop, Stethoscope, GraduationCap, DollarSign, Megaphone, PenTool, Briefcase, Building2 } from "lucide-react"
-import JobSearchResults from "@/pages/JobSearchResults"
 import { Link,useNavigate } from "react-router-dom"
 
 const jobCategories = [

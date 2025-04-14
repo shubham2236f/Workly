@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 //import { format, parse } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Card,
   CardContent,
@@ -13,17 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { entrySchema } from "@/lib/schema";
-import { Sparkles, PlusCircle, X, Pencil, Save, Loader } from "lucide-react";
-import { improveWithAI } from "@/api/apiResume";
-//import { console } from "sonner";
-import useFetch from "@/hooks/useFetch";
-import { useUser } from "@clerk/clerk-react";
-
-// const formatDisplayDate = (dateString) => {
-//   if (!dateString) return "";
-//   const date = parse(dateString, "yyyy-MM", new Date());
-//   return format(date, "MMM yyyy");
-// };
+import {PlusCircle, X,} from "lucide-react";
 
 const formatDisplayDate = (dateString) => {
     if (!dateString || typeof dateString !== "string") return "";
@@ -38,7 +27,6 @@ const formatDisplayDate = (dateString) => {
 
 export function EntryForm({ type, entries, onChange }) {
   const [isAdding, setIsAdding] = useState(false);
-  const {user} = useUser()
 
   const {
     register,
@@ -54,7 +42,6 @@ export function EntryForm({ type, entries, onChange }) {
       organization: "",
       startDate: "",
       endDate: "",
-      description: "",
       current: false,
     },
   });
@@ -79,39 +66,7 @@ export function EntryForm({ type, entries, onChange }) {
     onChange(newEntries);
   };
 
-  const {
-    loading: isImproving,
-    fn: improveWithAIFn,
-    data: improvedContent,
-    error: improveError,
-  } = useFetch(improveWithAI,{
-    user_id: user?.id
-  });
 
-  // Add this effect to handle the improvement result
-  useEffect(() => {
-    if (improvedContent && !isImproving) {
-      setValue("description", improvedContent);
-      console.log("Description improved successfully!");
-    }
-    if (improveError) {
-      console.error(improveError.message || "Failed to improve description");
-    }
-  }, [improvedContent, improveError, isImproving, setValue]);
-
-  // Replace handleImproveDescription with this
-  const handleImproveDescription = async () => {
-    const description = watch("description");
-    if (!description) {
-      console.error("Please enter a description first");
-      return;
-    }
-
-    await improveWithAIFn({
-      current: description,
-      type: type.toLowerCase(), // 'experience', 'education', or 'project'
-    });
-  };
 
   return (
     <div className="space-y-4">
@@ -219,38 +174,6 @@ export function EntryForm({ type, entries, onChange }) {
               <label htmlFor="current">Current {type}</label>
             </div>
 
-            <div className="space-y-2">
-              <Textarea
-                placeholder={`Description of your ${type.toLowerCase()}`}
-                className="h-32"
-                {...register("description")}
-                error={errors.description}
-              />
-              {errors.description && (
-                <p className="text-sm text-red-500">
-                  {errors.description.message}
-                </p>
-              )}
-            </div>
-            <Button
-              type="button"
-              
-              size="sm"
-              onClick={handleImproveDescription}
-              disabled={isImproving || !watch("description")}
-            >
-              {isImproving ? (
-                <>
-                  <Loader className="h-4 w-4 mr-2 animate-spin" />
-                  Improving...
-                </>
-              ) : (
-                <>
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  Improve with AI
-                </>
-              )}
-            </Button>
           </CardContent>
           <CardFooter className="flex justify-end space-x-2">
             <Button
@@ -265,7 +188,7 @@ export function EntryForm({ type, entries, onChange }) {
             </Button>
             <Button type="button" onClick={handleAdd}>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Add Entry
+              Confirm
             </Button>
           </CardFooter>
         </Card>

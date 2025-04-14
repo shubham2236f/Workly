@@ -55,7 +55,6 @@ const handleChange = (e) => {
       console.error("Error updating role:", err);
     });
 
-    // Add your form submission logic here
     try {
       const formattedIndustry = `${selectedIndustry.id}-${subIndustries
         .toLowerCase()

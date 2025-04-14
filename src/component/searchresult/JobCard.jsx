@@ -3,7 +3,7 @@ import { saveJobs, deleteJob } from "@/api/apijobs"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { useUser } from "@clerk/clerk-react"
-import {  MapPin, Heart, Trash2Icon } from "lucide-react"
+import {  MapPin, Heart,Bookmark, Trash2Icon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import useFetch from "@/hooks/useFetch"
@@ -85,9 +85,11 @@ export default function JobCard({job,savedInit = "false",onJobSaved = ()=>{},isM
         onClick={handleSaveJob}
         disabled={loadingSavedJob}>
           {saved?
-          (<Heart size={20} stroke="red" fill="red"/>)
+          (<Bookmark size={20} stroke="red" fill="red"/>)
           :
-          (<Heart size={20}/>)
+          (
+            <Bookmark/>
+          )
           }
 
         </button>

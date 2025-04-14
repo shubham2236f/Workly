@@ -113,7 +113,7 @@ const MockUi = () => {
             </p>
           </CardContent>
           <CardFooter>
-            <Button onClick={fnQuestions} className="w-full">
+            <Button onClick={fnQuestions} className="w-auto">
               Start Quiz
             </Button>
           </CardFooter>
@@ -161,8 +161,8 @@ const MockUi = () => {
             <BarLoader className="mt-4" width={"100%"} color="gray" />
           )}
           {currentQuestion < quizData.length - 1
-            ? "Next Question"
-            : "Finish Quiz"}
+            ? "Next"
+            : "Finish"}
         </Button>
         </CardFooter>
         </Card>
