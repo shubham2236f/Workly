@@ -196,18 +196,7 @@ const Footer = () => {
                   FAQ
                 </Link>
               </li>
-              <li className="transition-transform duration-200 hover:translate-x-1">
-                <Link to="/privacy" className="hover:text-blue-400 flex items-center">
-                  <span className="h-1 w-1 bg-blue-500 rounded-full mr-2"></span>
-                  Privacy Policy
-                </Link>
-              </li>
-              <li className="transition-transform duration-200 hover:translate-x-1">
-                <Link to="/terms" className="hover:text-blue-400 flex items-center">
-                  <span className="h-1 w-1 bg-blue-500 rounded-full mr-2"></span>
-                  Terms of Service
-                </Link>
-              </li>
+              
             </ul>
           </div>
 
@@ -286,7 +275,7 @@ const Footer = () => {
                 <div className="bg-gray-700 p-2 rounded-full mr-3 group-hover:bg-blue-600 transition-colors duration-300">
                   <MapPin size={18} />
                 </div>
-                <span>123 Job Street, Employment City, 12345</span>
+                <span>ECC, naini, prayagraj</span>
               </li>
             </ul>
           </div>

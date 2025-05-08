@@ -69,8 +69,9 @@ export default function PopularSection() {
           <div className="space-y-4">
             <h2 className="text-4xl font-bold text-gray-900">Why We are Most Popular</h2>
             <p className="text-gray-600 leading-relaxed">
-              Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Quis
-              ipsum suspendisse ultrices gravida
+            ChatGPT said:
+            Workly is the most popular AI-powered job portal because it offers an all-in-one solution for resume building, 
+            mock tests, and real-time industry insights — all personalized for faster career success.
             </p>
           </div>
 
